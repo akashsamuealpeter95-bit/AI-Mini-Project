@@ -1,0 +1,18 @@
+from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()          # reads OPENAI_API_KEY from .env
+client = OpenAI()
+
+prompt = "Act as a professional branding expert. Suggest one premium and sophisticated name for a luxury coffee shop. The name should be short, elegant, easy to pronounce, and memorable. Return only the shop name without explanation."
+
+# gpt-4.1-mini supports temperature; some reasoning models (e.g. GPT-5) may not
+for temp in [0, 0.7, 1.2]:
+    print(f"\n--- temperature = {temp} ---")
+    for _ in range(2):
+        r = client.responses.create(
+            model="gpt-5.4-mini",
+            input=prompt,
+            temperature=temp,
+        )
+        print(r.output_text)
